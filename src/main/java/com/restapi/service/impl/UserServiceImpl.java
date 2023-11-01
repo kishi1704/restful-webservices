@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.restapi.dto.UserDto;
 import com.restapi.entity.User;
+import com.restapi.mapper.UserMapper;
 import com.restapi.repository.UserRepository;
 import com.restapi.service.UserService;
 
@@ -22,20 +23,12 @@ public class UserServiceImpl implements UserService {
 	public UserDto createUser(UserDto userDto) {
 
 		// convert UserDto into User JPA Entity
-		User user = new User(
-				userDto.getId(), 
-				userDto.getFirstName(), 
-				userDto.getLastName(), 
-				userDto.getEmail());
+		User user = UserMapper.mapToUser(userDto);
 		
 		User savedUser = userRepository.save(user);
 		
 		// convert User JPA Entity into UserDto
-		UserDto savedUserDto = new UserDto(
-								savedUser.getId(),
-								savedUser.getFirstName(),
-								savedUser.getLastName(),
-								savedUser.getEmail());
+		UserDto savedUserDto = UserMapper.mapToUserDto(savedUser);
 		
 		return savedUserDto;
 	}
