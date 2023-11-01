@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.restapi.dto.UserDto;
 import com.restapi.entity.User;
+import com.restapi.exception.ResourceNotFoundException;
 import com.restapi.repository.UserRepository;
 import com.restapi.service.UserService;
 
@@ -40,8 +41,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto getUserById(Long userId) {
-		Optional<User> optionalUser = userRepository.findById(userId);
-		User user = optionalUser.get();
+		User user = userRepository.findById(userId).orElseThrow(
+				() -> new ResourceNotFoundException("User", "id", userId)
+		);
 		
 		// convert User JPA Entity into UserDto
 		// UserDto userDto = UserMapper.mapToUserDto(user);
@@ -63,7 +65,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto user) {
-		User existingUser = userRepository.findById(user.getId()).get();
+		User existingUser = userRepository.findById(user.getId()).orElseThrow(
+						() -> new ResourceNotFoundException("User", "id", user.getId())
+		);
 		existingUser.setFirstName(user.getFirstName());
 		existingUser.setLastName(user.getLastName());
 		existingUser.setEmail(user.getEmail());
@@ -80,6 +84,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(Long userId) {
 
+		User existingUser = userRepository.findById(userId).orElseThrow(
+				() -> new ResourceNotFoundException("User", "id", userId)
+		);
+		
 		userRepository.deleteById(userId);
 	}
 
