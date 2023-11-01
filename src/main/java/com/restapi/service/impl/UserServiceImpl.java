@@ -34,9 +34,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(Long userId) {
+	public UserDto getUserById(Long userId) {
 		Optional<User> optionalUser = userRepository.findById(userId);
-		return optionalUser.get();
+		User user = optionalUser.get();
+		
+		// convert User JPA Entity into UserDto
+		UserDto userDto = UserMapper.mapToUserDto(user);
+		
+		return userDto;
 	}
 
 	@Override
