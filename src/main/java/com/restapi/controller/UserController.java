@@ -44,17 +44,17 @@ public class UserController {
 	
 	// build get All Users REST API
 	@GetMapping()
-	public ResponseEntity<List<User>> getAllUsers() {
-		List<User> users = userService.getAllUsers();
+	public ResponseEntity<List<UserDto>> getAllUsers() {
+		List<UserDto> users = userService.getAllUsers();
 		
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
 	// build update User REST API
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateUser(@PathVariable("id") Long userId, @RequestBody User user) {
+	public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long userId, @RequestBody UserDto user) {
 		user.setId(userId);
-		User updatedUser = userService.updateUser(user);
+		UserDto updatedUser = userService.updateUser(user);
 		
 		return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 	}

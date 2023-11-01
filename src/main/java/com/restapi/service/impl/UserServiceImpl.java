@@ -2,6 +2,8 @@ package com.restapi.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -45,21 +47,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> getAllUsers() {
-
-		return userRepository.findAll();
+	public List<UserDto> getAllUsers() {
+		List<User> users = userRepository.findAll();
+		
+		return users.stream().map(UserMapper::mapToUserDto)
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public UserDto updateUser(UserDto user) {
 		User existingUser = userRepository.findById(user.getId()).get();
 		existingUser.setFirstName(user.getFirstName());
 		existingUser.setLastName(user.getLastName());
 		existingUser.setEmail(user.getEmail());
 
 		User updatedUser = userRepository.save(existingUser);
+		
+		// convert User JPA Entity into UserDto
+		UserDto updatedUserDto = UserMapper.mapToUserDto(updatedUser);
 
-		return updatedUser;
+		return updatedUserDto;
 	}
 
 	@Override

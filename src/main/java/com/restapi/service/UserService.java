@@ -3,7 +3,6 @@ package com.restapi.service;
 import java.util.List;
 
 import com.restapi.dto.UserDto;
-import com.restapi.entity.User;
 
 public interface UserService {
 	
@@ -11,9 +10,9 @@ public interface UserService {
 	
 	UserDto getUserById(Long userId);
 	
-	List<User> getAllUsers();
+	List<UserDto> getAllUsers();
 	
-	User updateUser(User user);
+	UserDto updateUser(UserDto user);
 	
 	void deleteUser(Long userId);
 }
