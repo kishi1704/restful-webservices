@@ -2,14 +2,13 @@ package com.restapi.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.restapi.dto.UserDto;
 import com.restapi.entity.User;
-import com.restapi.mapper.UserMapper;
 import com.restapi.repository.UserRepository;
 import com.restapi.service.UserService;
 
@@ -20,17 +19,21 @@ import lombok.AllArgsConstructor;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
+	
+	private ModelMapper modelMapper;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
 
 		// convert UserDto into User JPA Entity
-		User user = UserMapper.mapToUser(userDto);
+		// User user = UserMapper.mapToUser(userDto);
+		User user = modelMapper.map(userDto, User.class);
 		
 		User savedUser = userRepository.save(user);
 		
 		// convert User JPA Entity into UserDto
-		UserDto savedUserDto = UserMapper.mapToUserDto(savedUser);
+		// UserDto savedUserDto = UserMapper.mapToUserDto(savedUser);
+		UserDto savedUserDto = modelMapper.map(savedUser, UserDto.class);
 		
 		return savedUserDto;
 	}
@@ -41,7 +44,8 @@ public class UserServiceImpl implements UserService {
 		User user = optionalUser.get();
 		
 		// convert User JPA Entity into UserDto
-		UserDto userDto = UserMapper.mapToUserDto(user);
+		// UserDto userDto = UserMapper.mapToUserDto(user);
+		UserDto userDto = modelMapper.map(user, UserDto.class);
 		
 		return userDto;
 	}
@@ -50,7 +54,10 @@ public class UserServiceImpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		List<User> users = userRepository.findAll();
 		
-		return users.stream().map(UserMapper::mapToUserDto)
+		// return users.stream().map(UserMapper::mapToUserDto)
+		//		.collect(Collectors.toList());
+		
+		return users.stream().map((user) -> modelMapper.map(user, UserDto.class))
 				.collect(Collectors.toList());
 	}
 
@@ -64,7 +71,8 @@ public class UserServiceImpl implements UserService {
 		User updatedUser = userRepository.save(existingUser);
 		
 		// convert User JPA Entity into UserDto
-		UserDto updatedUserDto = UserMapper.mapToUserDto(updatedUser);
+		// UserDto updatedUserDto = UserMapper.mapToUserDto(updatedUser);
+		UserDto updatedUserDto = modelMapper.map(updatedUser, UserDto.class);
 
 		return updatedUserDto;
 	}
