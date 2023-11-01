@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.restapi.dto.UserDto;
 import com.restapi.entity.User;
 import com.restapi.service.UserService;
 
@@ -27,8 +28,8 @@ public class UserController {
 
 	// build create User REST API
 	@PostMapping()
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User savedUser = userService.createUser(user);
+	public ResponseEntity<UserDto> createUser(@RequestBody UserDto user) {
+		UserDto savedUser = userService.createUser(user);
 
 		return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 	}
