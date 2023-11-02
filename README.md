@@ -9,8 +9,8 @@
 - [Contributing](#contributing)
 
 ## Demo
-
-Check out the live demo of the website:
+- Check out the live demo of the website:
+- Check out the link to see the video demo: https://drive.google.com/file/d/1BpykyRZePveRxU_nelGf7q-rgjgmeXP1/view?usp=sharing
 
 ## Features
 CRUD REST APIs:
