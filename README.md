@@ -13,12 +13,22 @@
 Check out the live demo of the website:
 
 ## Features
+CRUD REST APIs:
+- Create User
+- Update User
+- Get User
+- Get All Users
+- Delete User
 
 ## Installation
+1. Clone the repository:
+   git clone https://github.com/kishi1704/restful-webservices.git
+2. Import project to Eclipse IDE
+3. Run project
 
 ## Technologies Used
 
-- Spring Boot
+- Spring boot, Lombok, SQL Server
 
 ## Contributing
 
